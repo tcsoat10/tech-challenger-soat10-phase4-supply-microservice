@@ -20,7 +20,7 @@ class ProductController:
     def create_product(self, dto: CreateProductDTO) -> ProductDTO:
         create_product_usecase = CreateProductUsecase.build(self.product_gateway, self.category_gateway)
         product = create_product_usecase.execute(dto)
-        return DTOPresenter.transform(product, ProductDTO)    
+        return DTOPresenter.transform(product, ProductDTO)
     
     def get_product_by_name(self, name: str) -> ProductDTO:
         product_by_name = GetProductByNameUseCase.build(self.product_gateway)

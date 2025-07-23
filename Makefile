@@ -21,13 +21,19 @@ migrate_db:
 
 dev:
 	@echo "Starting MySQL container..."
-	@docker compose up -d --build mysql-db
-	@sleep 5
+	@docker compose up -d --build supply-microservice-db
+	@echo "Waiting for MySQL to be ready..."
+	@until docker compose exec supply-microservice-db mysqladmin ping -h localhost --silent; do \
+		echo "Waiting for database connection..."; \
+		sleep 2; \
+	done
+	@echo "MySQL is ready!"
+	@sleep 2
 	@echo "Applying migrations..."
 	@MYSQL_HOST=localhost ./config/init_db/init_db.sh
 	@echo "Starting Uvicorn..."
 	@trap 'docker compose down --remove-orphans' INT TERM EXIT; \
-	MYSQL_HOST=localhost uvicorn src.app:app --reload --host 0.0.0.0 --port 8000
+	MYSQL_HOST=localhost uvicorn src.app:app --reload --host 0.0.0.0 --port 8003
 
 test_watch:
 	ENV=test ptw --runner 'pytest --ff $(extra)'
