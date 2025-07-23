@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: mysql-db
+  name: supply-microservice-db
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: mysql-db
+      app: supply-microservice-db
   template:
     metadata:
       labels:
-        app: mysql-db
+        app: supply-microservice-db
     spec:
       containers:
-      - name: mysql-db
+      - name: supply-microservice-db
         image: mysql:8.0
         ports:
         - containerPort: 3306

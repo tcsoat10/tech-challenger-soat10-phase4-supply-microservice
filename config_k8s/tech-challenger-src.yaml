@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: tech-challenger-pod
+  name: supply-microservice-pod
   labels:
-    app: tech-challenger-pod
+    app: supply-microservice-pod
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: tech-challenger-pod
+      app: supply-microservice-pod
   template:
     metadata:
       labels:
-        app: tech-challenger-pod
+        app: supply-microservice-pod
     spec:
       containers:
-      - name: tech-challenger-app
+      - name: supply-microservice-app
         image: 414132512745.dkr.ecr.us-east-1.amazonaws.com/soattc:latest
         ports:
-        - containerPort: 8000
+        - containerPort: 8003
         resources:
           requests:
             cpu: 25m

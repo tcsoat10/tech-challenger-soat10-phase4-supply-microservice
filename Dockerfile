@@ -24,7 +24,7 @@ COPY . .
 
 RUN chmod +x /app/config/init_db/init_db.sh
 
-ARG PORT=8000
+ARG PORT=8003
 ENV PORT=${PORT}
 EXPOSE ${PORT}
 
