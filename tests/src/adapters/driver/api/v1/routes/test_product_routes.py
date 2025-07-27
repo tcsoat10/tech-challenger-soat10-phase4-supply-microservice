@@ -1,7 +1,12 @@
 from datetime import datetime
 from fastapi import status
-
 import pytest
+
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+api_key = os.getenv("SUPPLY_MICROSERVICE_X_API_KEY")
 
 from src.core.exceptions.utils import ErrorCode
 from tests.factories.category_factory import CategoryFactory
@@ -16,7 +21,7 @@ def test_create_product_success(client, db_session, payload):
     category = CategoryFactory()
     payload["category_id"] = category.id
 
-    response = client.post("/api/v1/products", json=payload, permissions=[])
+    response = client.post("/api/v1/products", json=payload, permissions=[], headers={"x-api-key": api_key})
 
     assert response.status_code == status.HTTP_201_CREATED
 
@@ -41,7 +46,7 @@ def test_create_product_duplicate_name_and_return_error(client, db_session):
         "category_id": category.id,
     }
 
-    response = client.post("/api/v1/products", json=payload, permissions=[])
+    response = client.post("/api/v1/products", json=payload, permissions=[], headers={"x-api-key": api_key})
 
     assert response.status_code == status.HTTP_409_CONFLICT
 
@@ -66,7 +71,7 @@ def test_reactivate_product_and_return_success(client, db_session):
         "category_id": category.id,
     }
 
-    response = client.post("/api/v1/products", json=payload, permissions=[])
+    response = client.post("/api/v1/products", json=payload, permissions=[], headers={"x-api-key": api_key})
 
     assert response.status_code == status.HTTP_201_CREATED
 
@@ -95,8 +100,8 @@ def test_get_product_by_name_and_return_success(client):
         price=20.99,
         category=category2
     )
-    
-    response = client.get("/api/v1/products/Big Mac/name", permissions=[])
+
+    response = client.get("/api/v1/products/Big Mac/name", permissions=[], headers={"x-api-key": api_key})
 
     assert response.status_code == status.HTTP_200_OK
 
@@ -124,7 +129,7 @@ def test_get_product_by_id_and_return_success(client):
         category=category2
     )
     
-    response = client.get(f"/api/v1/products/{product1.id}/id", permissions=[])
+    response = client.get(f"/api/v1/products/{product1.id}/id", permissions=[], headers={"x-api-key": api_key})
 
     assert response.status_code == status.HTTP_200_OK
 
@@ -152,7 +157,7 @@ def test_get_all_products_return_success(client):
         category=category2
     )
     
-    response = client.get("/api/v1/products", permissions=[])
+    response = client.get("/api/v1/products", permissions=[], headers={"x-api-key": api_key})
 
     assert response.status_code == status.HTTP_200_OK
 
@@ -202,7 +207,12 @@ def test_update_product_and_return_success(client):
         "category_id": category2.id,
     }
 
-    response = client.put(f"/api/v1/products/{product.id}", json=payload, permissions=[])
+    response = client.put(
+        f"/api/v1/products/{product.id}",
+        json=payload,
+        permissions=[],
+        headers={"x-api-key": api_key}
+    )
 
     assert response.status_code == status.HTTP_200_OK
     data = response.json()
@@ -224,10 +234,10 @@ def test_delete_category_and_return_success(client):
     product1 = ProductFactory(name="Coca-Cola", category=category1)
     product2 = ProductFactory(name="Big Mac", category=category2)
 
-    response = client.delete(f"/api/v1/products/{product1.id}", permissions=[])
+    response = client.delete(f"/api/v1/products/{product1.id}", permissions=[], headers={"x-api-key": api_key})
     assert response.status_code == status.HTTP_204_NO_CONTENT
 
-    response = client.get("/api/v1/products", permissions=[])
+    response = client.get("/api/v1/products", permissions=[], headers={"x-api-key": api_key})
     assert response.status_code == status.HTTP_200_OK
     data = response.json()
 
