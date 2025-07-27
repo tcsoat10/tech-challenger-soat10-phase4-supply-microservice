@@ -7,7 +7,7 @@ data "terraform_remote_state" "rds" {
   config = local.use_mock ? {
     path = "${path.module}/../mock/mock_rds_outputs.tfstate"
   } : {
-    bucket = "soattc-order-db"
+    bucket = "soattc-stock-db"
     key    = "env:/${terraform.workspace}/stock-microservice/terraform.tfstate"
     region = "us-east-1"
   }
@@ -19,7 +19,7 @@ data "terraform_remote_state" "aws" {
     path = "${path.module}/../mock/mock_eks_outputs.tfstate"
   } : {
     bucket = "soattc-aws-infra"
-    key    = "env:/${terraform.workspace}/stock-microservice/terraform.tfstate"
+    key    = "env:/${terraform.workspace}/aws-infra/terraform.tfstate"
     region = "us-east-1"
   }
 }
