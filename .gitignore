@@ -143,3 +143,9 @@ pyrightconfig.json
 scripts
 
 # End of https://www.toptal.com/developers/gitignore/api/python
+*.tfvars
+*environment
+*.tfstate
+*.lock.hcl
+*LICENSE.txt
+*terraform-provider*
