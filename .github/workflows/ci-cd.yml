@@ -82,7 +82,7 @@ jobs:
 
       - name: Generate Coverage Report
         run: |
-          poetry run coverage report --omit=tests/*
+          poetry run coverage report --omit=tests/*,*.pyx
           poetry run coverage xml
 
       - name: Upload Coverage Report
