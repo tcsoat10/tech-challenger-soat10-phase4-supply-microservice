@@ -1,9 +1,10 @@
-import os
 from typing import Callable
 from fastapi import Request, Response
 from fastapi.responses import JSONResponse
 from starlette.middleware.base import BaseHTTPMiddleware
 from starlette.routing import Match
+
+from config.settings import STOCK_MICROSERVICE_X_API_KEY
 
 class ApiKeyMiddleware(BaseHTTPMiddleware):
     """Middleware para validar a chave de API (x-api-key) nas requisições."""
@@ -29,10 +30,8 @@ class ApiKeyMiddleware(BaseHTTPMiddleware):
                 if hasattr(route.endpoint, 'bypass_auth'):
                     return await call_next(request)
                 break
-
-        STOCK_MICROSERVICE_X_API_KEY = os.getenv("STOCK_MICROSERVICE_X_API_KEY")
+    
         api_key = request.headers.get("x-api-key")
-
         if not STOCK_MICROSERVICE_X_API_KEY:
             return JSONResponse(
                 status_code=500,
