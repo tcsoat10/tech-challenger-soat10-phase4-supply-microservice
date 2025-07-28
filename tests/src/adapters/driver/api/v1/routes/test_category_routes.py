@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
-api_key = os.getenv("SUPPLY_MICROSERVICE_X_API_KEY")
+api_key = os.getenv("STOCK_MICROSERVICE_X_API_KEY")
 
 from tests.factories.category_factory import CategoryFactory
 

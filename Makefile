@@ -21,9 +21,9 @@ migrate_db:
 
 dev:
 	@echo "Starting MySQL container..."
-	@docker compose up -d --build supply-microservice-db
+	@docker compose up -d --build stock-microservice-db
 	@echo "Waiting for MySQL to be ready..."
-	@until docker compose exec supply-microservice-db mysqladmin ping -h localhost --silent; do \
+	@until docker compose exec stock-microservice-db mysqladmin ping -h localhost --silent; do \
 		echo "Waiting for database connection..."; \
 		sleep 2; \
 	done
