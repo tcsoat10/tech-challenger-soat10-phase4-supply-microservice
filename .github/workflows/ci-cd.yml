@@ -75,7 +75,7 @@ jobs:
 
       - name: Run Tests in Parallel
         env:
-          SUPPLY_MICROSERVICE_X_API_KEY: ${{ secrets.STOCK_MICROSERVICE_API_KEY }}
+          STOCK_MICROSERVICE_X_API_KEY: ${{ secrets.STOCK_MICROSERVICE_API_KEY }}
         run: |
           export ENV=test
           poetry run pytest --cov=src --numprocesses auto --dist loadfile --max-worker-restart 0

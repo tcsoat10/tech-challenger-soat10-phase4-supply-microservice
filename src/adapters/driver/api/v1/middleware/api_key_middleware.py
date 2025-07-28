@@ -30,16 +30,16 @@ class ApiKeyMiddleware(BaseHTTPMiddleware):
                     return await call_next(request)
                 break
 
-        supply_microservice_x_api_key = os.getenv("SUPPLY_MICROSERVICE_X_API_KEY")
+        STOCK_MICROSERVICE_X_API_KEY = os.getenv("STOCK_MICROSERVICE_X_API_KEY")
         api_key = request.headers.get("x-api-key")
 
-        if not supply_microservice_x_api_key:
+        if not STOCK_MICROSERVICE_X_API_KEY:
             return JSONResponse(
                 status_code=500,
                 content={"detail": "Internal server error: API Key not configured on server."}
             )
 
-        if not api_key or api_key != supply_microservice_x_api_key:
+        if not api_key or api_key != STOCK_MICROSERVICE_X_API_KEY:
             return JSONResponse(
                 status_code=401,
                 content={"detail": "Invalid or missing API Key"}

@@ -1,11 +1,11 @@
 version: '3.8'
 
 networks:
-  supply-microservice-net:
+  stock-microservice-net:
     driver: bridge
 
 services:
-  supply-microservice-app:
+  stock-microservice-app:
     image: ${APP_NAME}:1.0
     build:
       context: .
@@ -14,12 +14,12 @@ services:
         PORT: ${APP_PORT}
     container_name: ${APP_NAME}
     networks:
-      - supply-microservice-net
+      - stock-microservice-net
     environment:
-      MYSQL_HOST: "supply-microservice-db"
+      MYSQL_HOST: "stock-microservice-db"
 
     depends_on:
-      - supply-microservice-db
+      - stock-microservice-db
     env_file:
       - .env
     ports:
@@ -32,18 +32,18 @@ services:
       timeout: 10s
       retries: 5
 
-  supply-microservice-db:
+  stock-microservice-db:
     image: mysql:${MYSQL_VERSION}
     container_name: ${MYSQL_CONTAINER_NAME}
     restart: always
     networks:
-      - supply-microservice-net
+      - stock-microservice-net
     env_file:
       - .env
     ports:
       - "${MYSQL_PORT}:3306"
     volumes:
-      - supply-microservice-data:/var/lib/mysql
+      - stock-microservice-data:/var/lib/mysql
     command: --default-authentication-plugin=mysql_native_password
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
@@ -53,4 +53,4 @@ services:
 
 
 volumes:
-  supply-microservice-data:
+  stock-microservice-data:

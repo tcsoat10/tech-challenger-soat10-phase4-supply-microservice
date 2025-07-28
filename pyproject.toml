@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "supply-microservice-soat10"
+name = "stock-microservice-soat10"
 version = "0.1.0"
 authors = ["Carlos Roberto <carlosjr.if@gmail.com>"]
 description = ""

@@ -4,13 +4,13 @@ metadata:
   name: tc-app-config
 data:
   MYSQL_VERSION: "8.0"
-  MYSQL_CONTAINER_NAME: "supply-microservice-db"
-  MYSQL_DATABASE: "supply-microservice-db"
-  MYSQL_HOST: "supply-microservice-db-service" #"supply-microservice-db" "localhost"
+  MYSQL_CONTAINER_NAME: "stock-microservice-db"
+  MYSQL_DATABASE: "stock-microservice-db"
+  MYSQL_HOST: "stock-microservice-db-service" #"stock-microservice-db" "localhost"
   MYSQL_PORT: "3308"
   DEBUG: "true"
   ENVIRONMENT: "development"
-  APP_NAME: "supply-microservice-app"
+  APP_NAME: "stock-microservice-app"
   APP_PORT: "8003"
   LOG_LEVEL: "DEBUG"
   WEBHOOK_URL: "https://9830-189-124-19-101.ngrok-free.app"
