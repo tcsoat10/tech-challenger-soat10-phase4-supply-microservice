@@ -90,7 +90,7 @@ jobs:
           name: coverage-report
           path: coverage.xml
           retention-days: 7  
-          
+
   sonar-scan:
     name: SonarQube Scan
     needs: test
@@ -115,8 +115,8 @@ jobs:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
         with:
           args: >
+            -Dsonar.login="admin"
             -Dsonar.projectKey=tech-challenger-soat10-phase4-order-microservice
-            -Dsonar.organization=sua-organizacao
             -Dsonar.sources=src
             -Dsonar.tests=tests
             -Dsonar.python.coverage.reportPaths=coverage.xml
