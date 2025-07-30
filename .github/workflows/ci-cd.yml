@@ -82,7 +82,8 @@ jobs:
 
       - name: Generate Coverage Report
         run: |
-          poetry run coverage xml --include="src/*" --omit="*/dependency_injector/*"
+          poetry run coverage report --include="src/*" --omit="*/dependency_injector/*,tests/*"
+          poetry run coverage xml --include="src/*" --omit="*/dependency_injector/*,tests/*"
 
       - name: Upload Coverage Report
         uses: actions/upload-artifact@v4
@@ -91,9 +92,9 @@ jobs:
           path: coverage.xml
           retention-days: 7  
 
-  sonar-scan:
-    name: SonarQube Scan
-    needs: test
+  run_sonarqube:
+    name: Build and analyze
+    needs: [test]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -116,7 +117,7 @@ jobs:
         with:
           args: >
             -Dsonar.login="admin"
-            -Dsonar.projectKey=tech-challenger-soat10-phase4-order-microservice
+            -Dsonar.projectKey=soattc-stock-app
             -Dsonar.sources=src
             -Dsonar.tests=tests
             -Dsonar.python.coverage.reportPaths=coverage.xml
@@ -204,6 +205,7 @@ jobs:
           aws ecr get-login-password --region ${{ env.REGION_DEFAULT }} | docker login --username AWS --password-stdin ${{ env.AWS_ECR_REGISTRY }}
 
       - name: Build and Push Docker Image
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         id: build-image
         run: |
           # Build and push Docker image
